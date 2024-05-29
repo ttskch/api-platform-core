@@ -18,6 +18,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
 use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
@@ -136,7 +137,7 @@ final class SchemaFactory implements SchemaFactoryInterface, SchemaFactoryAwareI
             }
 
             $normalizedPropertyName = $this->nameConverter ? $this->nameConverter->normalize($propertyName, $inputOrOutputClass, $format, $serializerContext) : $propertyName;
-            if ($propertyMetadata->isRequired()) {
+            if ($propertyMetadata->isRequired() && !$operation instanceof Patch) {
                 $definition['required'][] = $normalizedPropertyName;
             }
 
